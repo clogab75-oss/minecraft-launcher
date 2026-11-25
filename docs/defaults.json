@@ -72,5 +72,11 @@
   },
   "modsPolicy": {
     "strict": true
+  },
+  "page": {
+    "description": "Télécharge le launcher, connecte-toi avec Microsoft et rejoins le serveur.",
+    "button": "Télécharger pour Windows",
+    "help": "Si Windows affiche un avertissement : « Informations complémentaires », puis « Exécuter quand même ».",
+    "repo": ""
   }
 }

@@ -1,0 +1,15 @@
+:root { --bg: #0e1116; --surface: #181d26; --text: #eef1f6; --muted: #9aa4b5; --accent: #4ade80; --accent-text: #06210f; --radius: 14px; --overlay: 55%; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+body { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px 16px; background: var(--bg) center / cover fixed; color: var(--text); font: 15px/1.5 system-ui, "Segoe UI", sans-serif; }
+body::before { content: ""; position: fixed; inset: 0; background: var(--bg); opacity: var(--overlay); }
+main { position: relative; width: 100%; max-width: 520px; background: var(--surface); border-radius: var(--radius); padding: 40px 28px; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+#logo { max-width: 100%; height: 110px; object-fit: contain; }
+h1 { font-size: 30px; overflow-wrap: anywhere; }
+#download { background: var(--accent); color: var(--accent-text); text-decoration: none; font-weight: 700; font-size: 18px; padding: 16px 36px; border-radius: var(--radius); }
+#download:hover { filter: brightness(1.1); }
+#info, #help { color: var(--muted); font-size: 13px; }
+#links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+#links a { color: var(--text); text-decoration: none; border: 1px solid var(--muted); border-radius: 99px; padding: 6px 14px; font-size: 13px; }
+#links a:hover { border-color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }

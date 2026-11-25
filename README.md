@@ -65,6 +65,8 @@ Côté joueur, la page **Mods & packs** permet d'ajouter ses propres resource pa
 
 Sans jeton : onglet **Actions** du dépôt > « Publier le launcher » > **Run workflow**.
 
+**Page publique** : donne à tes joueurs `https://TON-PSEUDO.github.io/NOM-DU-DEPOT/telecharger/`. Elle propose toujours la dernière version et se personnalise dans l'onglet **Page publique** du site admin.
+
 **Pour une mise à jour**, publie un numéro plus grand (`1.0.1`). Les launchers la téléchargent seuls et l'installent au redémarrage. Pour la rendre obligatoire, indique ce numéro dans « Version minimale », une fois la compilation réussie.
 
 Le .exe n'est pas signé : Windows peut afficher « Windows a protégé votre ordinateur » (**Informations complémentaires > Exécuter quand même**).

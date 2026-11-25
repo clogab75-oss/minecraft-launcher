@@ -139,6 +139,12 @@ const pages = {
     group('Textes du launcher', Object.keys(defaults.texts).map((k) => [`texts.${k}`, defaults.texts[k]])),
     linksCard(),
   ]],
+  page: ['Page publique', () => [
+    card('Page de téléchargement', el('small', { textContent: 'Partage ce lien à tes joueurs. La page reprend le nom, le logo, les couleurs, le fond et les liens du launcher.' }),
+      el('div', { className: 'row' }, el('a', { className: 'button', href: 'telecharger/', target: '_blank', textContent: 'Ouvrir la page' }),
+        button('Copier le lien', async () => { await navigator.clipboard.writeText(new URL('telecharger/', location.href).href); toast('Lien copié.'); }, 'primary'))),
+    group('Contenu', [['page.description', 'Description', 'area'], ['page.button', 'Texte du bouton'], ['page.help', "Message d'aide"], ['page.repo', 'Dépôt GitHub (vide = automatique)']]),
+  ]],
   game: ['Serveur & jeu', () => [
     group('Serveur Minecraft', [['server.ip', 'Adresse IP ou domaine'], ['server.port', 'Port', 'number'], ['server.autoJoin', 'Connecter les joueurs au serveur dès le lancement', 'check']]),
     group('Version du jeu', [['minecraft.version', 'Version de Minecraft'], ['minecraft.loader', 'Fabric Loader (vide = dernière version stable)'], ['minecraft.defaultRam', 'RAM par défaut (Mo)', 'number'], ['minecraft.minRam', 'RAM minimum (Mo)', 'number'], ['minecraft.jvmArgs', 'Arguments Java en plus'], ['modsPolicy.strict', 'Interdire les mods personnels des joueurs (packs et shaders toujours autorisés)', 'check']], 'Si tu changes de version, remplace aussi les mods dans "Mods & fichiers".'),
