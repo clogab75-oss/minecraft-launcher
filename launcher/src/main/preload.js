@@ -7,12 +7,12 @@ const call = async (channel, ...args) => {
 };
 
 const api = {};
-for (const name of ['state', 'play', 'savePrefs', 'status', 'logs',
+for (const name of ['state', 'login', 'cancelLogin', 'logout', 'play', 'savePrefs', 'status', 'logs',
   'openFolder', 'repair', 'ownFiles', 'pickFiles', 'removeOwn', 'openLink', 'installUpdate', 'window']) {
   api[name] = (...args) => call(name, ...args);
 }
 api.on = (event, callback) => {
-    if (['progress', 'update', 'state'].includes(event)) ipcRenderer.on(event, (_e, data) => callback(data));
+  if (['progress', 'game', 'update', 'state'].includes(event)) ipcRenderer.on(event, (_e, data) => callback(data));
 };
 
 // Glisser-déposer : seul le preload peut retrouver le chemin d'un fichier.

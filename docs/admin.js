@@ -131,7 +131,7 @@ const pages = {
     group('Identité', [['general.name', 'Nom du serveur'], ['general.subtitle', 'Sous-titre'], ['theme.logoUrl', 'Logo', 'image'], ['theme.logoSize', 'Taille du logo', 'range', [32, 160, 4]]]),
     group('Couleurs', [['theme.bg', 'Fond', 'color'], ['theme.surface', 'Panneaux', 'color'], ['theme.text', 'Texte', 'color'], ['theme.muted', 'Texte discret', 'color'], ['theme.accent', 'Couleur principale', 'color'], ['theme.accentText', 'Texte sur couleur principale', 'color']]),
     group('Fond et formes', [['theme.bgImage', 'Image de fond', 'image'], ['theme.bgOverlay', "Assombrissement de l'image", 'range', [0, 1, 0.05]], ['theme.surfaceOpacity', 'Opacité des panneaux', 'range', [0, 1, 0.05]], ['theme.radius', 'Arrondis', 'range', [0, 30, 1]], ['theme.font', 'Police Google Fonts (ex : Poppins)']]),
-    group('Disposition', [['theme.sidebar', 'Menu', 'select', [['left', 'À gauche'], ['right', 'À droite'], ['top', 'En haut']]], ['theme.playAlign', 'Bouton Jouer', 'select', [['left', 'À gauche'], ['center', 'Au centre'], ['right', 'À droite']]], ['features.news', 'Afficher les actualités', 'check'], ['features.mods', 'Afficher la page des mods', 'check'], ['features.status', "Afficher l'état du serveur", 'check']]),
+    group('Disposition', [['theme.sidebar', 'Menu', 'select', [['left', 'À gauche'], ['right', 'À droite'], ['top', 'En haut']]], ['theme.playAlign', 'Bouton Jouer', 'select', [['left', 'À gauche'], ['center', 'Au centre'], ['right', 'À droite']]], ['features.news', 'Afficher les actualités', 'check'], ['features.mods', 'Afficher la page des mods', 'check'], ['features.status', "Afficher l'état du serveur", 'check'], ['features.avatar', 'Afficher la tête du joueur', 'check']]),
     card('CSS personnalisé (avancé)', el('small', { textContent: 'Tout le launcher est modifiable ici. Exemples : #play { text-transform: uppercase; }  #sidebar { width: 280px; }  .news-item { border: 1px solid var(--accent); }' }), field(['theme.customCss', 'CSS', 'code'])),
     group("Installeur (appliqué à la prochaine version publiée)", [['general.exeName', "Nom de l'application Windows"], ['theme.iconUrl', 'Icône PNG (256×256 minimum)', 'image', 'image/png']]),
   ]],
@@ -146,8 +146,9 @@ const pages = {
     group('Contenu', [['page.description', 'Description', 'area'], ['page.button', 'Texte du bouton'], ['page.help', "Message d'aide"], ['page.repo', 'Dépôt GitHub (vide = automatique)']]),
   ]],
   game: ['Serveur & jeu', () => [
-    group('Serveur Minecraft', [['server.ip', 'Adresse IP ou domaine'], ['server.port', 'Port', 'number']], "L'adresse sert à afficher l'état du serveur. La connexion se fait ensuite depuis Minecraft."),
+    group('Serveur Minecraft', [['server.ip', 'Adresse IP ou domaine'], ['server.port', 'Port', 'number'], ['server.autoJoin', 'Connecter les joueurs au serveur dès le lancement', 'check']]),
     group('Version du jeu', [['minecraft.version', 'Version de Minecraft'], ['minecraft.loader', 'Fabric Loader (vide = dernière version stable)'], ['minecraft.defaultRam', 'RAM par défaut (Mo)', 'number'], ['minecraft.minRam', 'RAM minimum (Mo)', 'number'], ['minecraft.jvmArgs', 'Arguments Java en plus'], ['modsPolicy.strict', 'Interdire les mods personnels des joueurs (packs et shaders toujours autorisés)', 'check']], 'Si tu changes de version, remplace aussi les mods dans "Mods & fichiers".'),
+    group('Connexion Microsoft', [['microsoft.clientId', "ID d'application (client) Azure"]], "Vide : le launcher prépare le jeu et ouvre le launcher Minecraft officiel. Rempli (ID approuvé par Mojang) : connexion et lancement directs."),
     group('Maintenance', [['maintenance.enabled', 'Bloquer le bouton Jouer', 'check'], ['maintenance.message', 'Message affiché', 'area']]),
   ]],
   files: ['Mods & fichiers', filesPage],
@@ -356,6 +357,7 @@ function sendPreview() {
   if (!draft) return;
   $('preview').contentWindow?.postMessage({ type: 'preview', state: {
     settings: structuredClone(draft), files: files.filter((f) => f.enabled), news: news.filter((n) => n.published),
+    account: { id: '8667ba71b85a4004af54457a9734eed7', name: 'Steve' },
   } }, location.origin);
 }
 function scalePreview() {

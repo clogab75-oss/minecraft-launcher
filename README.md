@@ -25,19 +25,33 @@ Utilise un mot de passe solide et unique : celui qui contrôle ce compte contrô
 3. **Settings > Pages** : « Deploy from a branch », branche `main`, dossier `/docs`.
 4. Ton site admin : `https://TON-PSEUDO.github.io/NOM-DU-DEPOT/`
 
-## 3. Connexion Minecraft
+## 3. Connexion Microsoft (facultative)
 
-**Aucun ID Azure ni inscription OAuth n'est nécessaire.** Chaque joueur doit installer le **launcher Minecraft officiel** et s'y connecter avec son propre compte Microsoft qui possède Minecraft Java Edition.
+**Sans ID (champ vide sur le site)** : le bouton Jouer installe Fabric, synchronise mods et packs, crée une installation au nom du serveur dans le launcher Minecraft officiel, puis l'ouvre. Le joueur doit avoir ce launcher (ouvert au moins une fois), le fermer avant de cliquer, puis cliquer sur Jouer dedans. Tu peux passer directement à l'étape 4.
 
-Ferme le launcher Minecraft officiel s'il est déjà ouvert. Quand le joueur clique sur **Jouer**, le launcher prépare Minecraft et Fabric, synchronise les fichiers, sélectionne l'installation Fabric du serveur dans le launcher officiel et l'ouvre. Le joueur se connecte dans cette application officielle, puis clique sur **Jouer**. La première ouverture peut demander au launcher officiel de télécharger des composants Java.
+La suite de cette section ne sert que pour le lancement direct.
 
-L'authentification reste celle de Microsoft/Minecraft ; le launcher personnalisé ne récupère ni ne stocke les identifiants. Le joueur rejoint ensuite le serveur depuis le menu Multijoueur de Minecraft. L'adresse configurée sur le site admin sert à afficher l'état du serveur, pas à connecter automatiquement le joueur.
+Le launcher a besoin d'un **ID d'application (client)** qui t'appartient.
+
+**Tu en as déjà un qui marchait** (ancien projet) : retrouve-le sur https://portal.azure.com > Inscriptions d'applications, vérifie le point 3 ci-dessous, puis colle-le dans le site admin. Pas besoin de refaire le formulaire.
+
+**Tu n'en as pas :**
+
+1. https://portal.azure.com > **Inscriptions d'applications > Nouvelle inscription** (Azure peut demander de créer d'abord un compte gratuit).
+2. Nom libre, sans « Minecraft » ni « Mojang ». Type de comptes : **comptes Microsoft personnels uniquement**.
+3. **Authentification > Ajouter une plateforme > Applications de bureau et mobiles**, URI de redirection : `http://localhost`
+4. Copie l'ID d'application.
+5. Pour un nouvel ID, Mojang exige une validation : https://aka.ms/mce-reviewappid (délai de quelques jours à quelques semaines). Avant ça, la connexion répond « application non approuvée ».
+
+Dans le site admin : **Serveur & jeu > Connexion Microsoft**, colle l'ID et enregistre.
+
+Les joueurs restent connectés après fermeture et mise à jour du launcher. Ils ne se reconnectent que s'ils cliquent sur « Déconnexion », si Microsoft révoque la session (changement de mot de passe, longue inactivité) ou si tu changes d'ID.
 
 ## 4. Régler le launcher
 
 Sur le site admin :
 
-- **Serveur & jeu** : l'adresse IP de ton serveur, utilisée pour afficher son état.
+- **Serveur & jeu** : l'adresse IP de ton serveur. Au lancement, le joueur y est connecté directement.
 - **Apparence** : nom, logo, couleurs, fond, police, disposition, CSS libre, avec aperçu en direct.
 - **Textes & liens** : tous les textes principaux, boutons Discord, boutique, etc.
 - **Mods & fichiers** : onglets Mods, Resource packs, Shaders et Configs. Glisse plusieurs fichiers d'un coup, ou coche plusieurs résultats Modrinth. Les shaders ont besoin du mod **Iris** : ajoute-le depuis l'onglet Mods.

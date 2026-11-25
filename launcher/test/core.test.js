@@ -6,7 +6,7 @@ const os = require('os');
 const net = require('net');
 const crypto = require('crypto');
 const { syncFiles, relativePath } = require('../src/main/sync');
-const { addPacks, setFullscreen } = require('../src/main/options');
+const { addPacks } = require('../src/main/options');
 const { compareVersions, deepMerge, exists } = require('../src/main/util');
 const { ping } = require('../src/main/ping');
 
@@ -59,14 +59,6 @@ test('activation des resource packs', () => {
   const out = addPacks('version:1\nresourcePacks:["vanilla"]\nfov:0.0\n', ['p.zip']);
   assert.match(out, /resourcePacks:\["vanilla","file\/p.zip"\]/);
   assert.match(out, /fov:0.0/);
-});
-
-test('préserve les options du jeu en appliquant le plein écran', async () => {
-  const gameDir = await fs.mkdtemp(path.join(os.tmpdir(), 'options-'));
-  const optionsFile = path.join(gameDir, 'options.txt');
-  await fs.writeFile(optionsFile, 'fov:0.0\nfullscreen:false\n');
-  await setFullscreen(gameDir, true);
-  assert.equal(await fs.readFile(optionsFile, 'utf8'), 'fov:0.0\nfullscreen:true\n');
 });
 
 test('versions et fusion des réglages', () => {

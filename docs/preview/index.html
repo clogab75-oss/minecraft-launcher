@@ -28,6 +28,11 @@
       <button class="tab" data-page="settings" data-text="settings"></button>
     </div>
     <div id="links"></div>
+    <div id="account">
+      <img id="avatar" alt="" hidden>
+      <span id="player"></span>
+      <button id="logout" class="link" data-text="logout" hidden></button>
+    </div>
   </nav>
 
   <main>
@@ -41,7 +46,9 @@
         <p id="message" role="alert" hidden></p>
         <div id="progress" hidden><span id="progress-label"></span><div class="bar"><div id="progress-fill"></div></div></div>
         <div class="row">
-          <button id="play" class="primary"></button>
+          <button id="login" class="primary" data-text="login"></button>
+          <button id="cancel-login" class="secondary" hidden>Annuler</button>
+          <button id="play" class="primary" hidden></button>
         </div>
         <small id="login-hint" data-text="loginHint"></small>
       </div>
@@ -67,12 +74,12 @@
       </div>
       <div class="card">
         <label class="check"><input type="checkbox" id="fullscreen"> Plein écran</label>
-        <label class="check"><input type="checkbox" id="hideOnPlay"> Cacher ce launcher après ouverture de Minecraft</label>
+        <label class="check"><input type="checkbox" id="hideOnPlay"> Cacher le launcher pendant le jeu</label>
       </div>
       <div class="card row">
         <button class="secondary" id="open-folder">Ouvrir le dossier du jeu</button>
         <button class="secondary" id="repair">Réparer l'installation</button>
-        <button class="secondary" id="show-logs">Logs du launcher</button>
+        <button class="secondary" id="show-logs">Voir les logs</button>
       </div>
       <p id="settings-message"></p>
       <pre id="logs" hidden></pre>
