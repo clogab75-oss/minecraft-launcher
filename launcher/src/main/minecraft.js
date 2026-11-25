@@ -1,12 +1,10 @@
-// Installe Minecraft + Fabric + Java, puis lance le jeu.
-const fs = require('fs/promises');
+// Installe Minecraft et Fabric pour le launcher officiel.
 const path = require('path');
-const { Version, launch } = require('@xmcl/core');
+const { Version } = require('@xmcl/core');
 const {
   getVersionList, installTask, installDependenciesTask, installFabric,
-  fetchJavaRuntimeManifest, installJavaRuntimeTask,
 } = require('@xmcl/installer');
-const { readJson, writeJson, exists } = require('./util');
+const { readJson, writeJson } = require('./util');
 
 async function runTask(task, label, report) {
   let last = 0;
@@ -28,19 +26,7 @@ async function latestLoader(version) {
   return found.loader.version;
 }
 
-async function installJava(root, component, report) {
-  const home = path.join(root, 'runtime', component);
-  const bin = path.join(home, 'bin', process.platform === 'win32' ? 'javaw.exe' : 'java');
-  const marker = path.join(home, '.ok');
-  if (await exists(marker) && await exists(bin)) return bin;
-  report('Installation de Java', null);
-  const manifest = await fetchJavaRuntimeManifest({ target: component });
-  await runTask(installJavaRuntimeTask({ destination: home, manifest }), 'Installation de Java', report);
-  await fs.writeFile(marker, manifest.version?.name || 'ok');
-  return bin;
-}
-
-/** Prépare tout et renvoie ce qu'il faut pour lancer. `repair` force la vérification en ligne. */
+/** Prépare Minecraft et Fabric pour le launcher officiel. */
 async function prepare({ root, version, loader, report }) {
   const stateFile = path.join(root, 'installed.json');
   const state = await readJson(stateFile, {});
@@ -66,35 +52,8 @@ async function prepare({ root, version, loader, report }) {
   const id = same ? state.id : `${version}-fabric${loaderVersion}`;
   const resolved = await Version.parse(root, id);
   await runTask(installDependenciesTask(resolved), 'Vérification des fichiers du jeu', report);
-  const javaPath = await installJava(root, resolved.javaVersion.component, report);
   await writeJson(stateFile, { version, loader: loaderVersion, id });
-  return { id, resolved, javaPath, versionJar: path.join(root, 'versions', version, `${version}.jar`) };
+  return { id, resolved, versionJar: path.join(root, 'versions', version, `${version}.jar`) };
 }
 
-async function start({ root, prepared, session, ram, minRam, jvmArgs, server, resolution, name, launcherVersion }) {
-  const max = Math.max(1024, ram);
-  return launch({
-    gamePath: root,
-    resourcePath: root,
-    javaPath: prepared.javaPath,
-    version: prepared.id,
-    gameProfile: { id: session.id, name: session.name },
-    accessToken: session.accessToken,
-    userType: 'msa',
-    launcherName: name,
-    launcherBrand: launcherVersion,
-    minMemory: Math.min(minRam, max),
-    maxMemory: max,
-    extraJVMArgs: [
-      '-XX:+UseG1GC', '-XX:+UnlockExperimentalVMOptions', '-XX:G1NewSizePercent=20',
-      '-XX:G1ReservePercent=20', '-XX:MaxGCPauseMillis=50', '-XX:G1HeapRegionSize=32M',
-      ...String(jvmArgs || '').split(/\s+/).filter(Boolean),
-    ],
-    features: { launcher: { auth_xuid: '0', clientid: '0' } },
-    quickPlayMultiplayer: server || undefined,
-    resolution,
-    extraExecOption: { cwd: root, detached: true },
-  });
-}
-
-module.exports = { prepare, start };
+module.exports = { prepare };

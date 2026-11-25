@@ -9,7 +9,6 @@ const https = (url) => (/^https:\/\//i.test(url || '') ? url : '');
 
 let state;
 let working = false;
-let loggingIn = false;
 let notice = ''; // message automatique (hors ligne, maintenance)
 
 function applyTheme(s) {
@@ -40,7 +39,7 @@ function applyTheme(s) {
 }
 
 function renderHome() {
-  const { settings: s, news, account, maintenance } = { ...state, maintenance: state.settings.maintenance };
+  const { settings: s, news, maintenance } = { ...state, maintenance: state.settings.maintenance };
   $('news').hidden = !s.features.news || news.length === 0;
   $('news-list').replaceChildren(...news.map((n) => el('article', { className: 'news-item' },
     ...(https(n.image_url) ? [el('img', { src: n.image_url, alt: '' })] : []),
@@ -48,27 +47,15 @@ function renderHome() {
     el('small', { textContent: new Date(n.created_at).toLocaleDateString('fr-FR') }),
     el('p', { textContent: n.body }),
   )));
-  $('login').hidden = Boolean(account);
-  $('login').disabled = loggingIn;
-  $('cancel-login').hidden = !loggingIn;
-  $('login-hint').hidden = Boolean(account);
-  $('play').hidden = !account;
-  $('play').disabled = working || state.gameRunning || maintenance.enabled || state.updateRequired;
-  $('play').textContent = state.gameRunning ? s.texts.running : working ? s.texts.preparing : s.texts.play;
+  $('login-hint').textContent = s.texts.loginHint || '';
+  $('play').hidden = false;
+  $('play').disabled = working || maintenance.enabled || state.updateRequired;
+  $('play').textContent = working ? s.texts.preparing : s.texts.play;
   const next = maintenance.enabled ? maintenance.message
     : state.online ? '' : 'Hors ligne : impossible de récupérer les dernières informations.';
   if (next) showMessage(next);
   else if (notice && $('message').textContent === notice) showMessage('');
   notice = next;
-}
-
-function renderAccount() {
-  const { account, settings: s } = state;
-  $('player').textContent = account?.name || '';
-  $('logout').hidden = !account || state.gameRunning || working;
-  const avatar = $('avatar');
-  avatar.hidden = !account || !s.features.avatar;
-  if (!avatar.hidden) avatar.src = `https://mc-heads.net/avatar/${encodeURIComponent(account.id)}/64`;
 }
 
 function renderMods() {
@@ -155,7 +142,6 @@ function render(next) {
     return button;
   }));
   renderHome();
-  renderAccount();
   renderMods();
   renderOwn().catch(() => {});
   renderSettings();
@@ -183,7 +169,7 @@ async function updateStatus() {
 }
 
 async function reload() {
-  if (working || loggingIn) return;
+  if (working) return;
   render(await window.api.state());
   updateStatus();
 }
@@ -191,31 +177,10 @@ async function reload() {
 for (const tab of document.querySelectorAll('.tab')) tab.addEventListener('click', () => showPage(tab.dataset.page));
 for (const button of document.querySelectorAll('[data-window]')) button.addEventListener('click', () => window.api.window(button.dataset.window));
 
-$('login').addEventListener('click', async () => {
-  showMessage('');
-  loggingIn = true;
-  renderHome();
-  try {
-    state.account = await window.api.login();
-  } catch (error) {
-    showMessage(error.message);
-  }
-  loggingIn = false;
-  renderHome();
-  renderAccount();
-});
-$('cancel-login').addEventListener('click', () => window.api.cancelLogin());
-$('logout').addEventListener('click', async () => {
-  await window.api.logout();
-  state.account = null;
-  renderHome();
-  renderAccount();
-});
 $('play').addEventListener('click', async () => {
   showMessage('');
   working = true;
   renderHome();
-  renderAccount();
   let failure;
   try { await window.api.play(); } catch (error) { failure = error.message; }
   working = false;
@@ -244,7 +209,7 @@ $('open-folder').addEventListener('click', () => window.api.openFolder());
 $('repair').addEventListener('click', async () => {
   try {
     await window.api.repair();
-    $('settings-message').textContent = 'Les fichiers seront revérifiés et Java réinstallé au prochain lancement.';
+    $('settings-message').textContent = 'Minecraft et Fabric seront revérifiés au prochain lancement.';
   } catch (error) { $('settings-message').textContent = error.message; }
 });
 $('show-logs').addEventListener('click', async () => {
@@ -261,12 +226,6 @@ window.api.on('progress', (p) => {
   $('progress-label').textContent = p.ratio == null ? p.label : `${p.label} — ${Math.round(p.ratio * 100)} %`;
   $('progress-fill').classList.toggle('unknown', p.ratio == null);
   $('progress-fill').style.width = `${(p.ratio || 0) * 100}%`;
-});
-window.api.on('game', (game) => {
-  state.gameRunning = game.running;
-  renderHome();
-  renderAccount();
-  if (!game.running && game.code !== 0) showMessage(`Minecraft s'est fermé avec une erreur (code ${game.code}). Regarde les logs dans les réglages.`);
 });
 window.api.on('update', (update) => {
   state.update = update;

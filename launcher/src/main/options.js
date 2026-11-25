@@ -56,4 +56,21 @@ async function enableResourcePacks(gameDir, installed, versionJar) {
   await writeJson(stateFile, current);
 }
 
-module.exports = { enableResourcePacks, addPacks };
+async function setFullscreen(gameDir, fullscreen) {
+  const optionsFile = path.join(gameDir, 'options.txt');
+  let text;
+  try {
+    text = await fs.readFile(optionsFile, 'utf8');
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+    text = '';
+  }
+  const lines = text.split(/\r?\n/).filter(Boolean);
+  const index = lines.findIndex((line) => line.startsWith('fullscreen:'));
+  const setting = `fullscreen:${Boolean(fullscreen)}`;
+  if (index >= 0) lines[index] = setting;
+  else lines.push(setting);
+  await fs.writeFile(optionsFile, `${lines.join('\n')}\n`, 'utf8');
+}
+
+module.exports = { enableResourcePacks, setFullscreen, addPacks };

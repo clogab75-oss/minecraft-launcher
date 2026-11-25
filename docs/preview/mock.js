@@ -10,7 +10,7 @@
     if (event.origin !== location.origin || event.data?.type !== 'preview') return;
     current = {
       ...event.data.state, online: true, version: '1.0.0', update: { state: 'idle' }, updateRequired: false,
-      totalRam: 16384, prefs, gameRunning: false,
+      totalRam: 16384, prefs,
     };
     const message = document.getElementById('message');
     if (!current.settings.maintenance.enabled) message.hidden = true;
@@ -23,9 +23,8 @@
     state: async () => { await first; return current; },
     status: async () => ({ online: true, players: 12, max: 100 }),
     savePrefs: async (patch) => Object.assign(prefs, patch),
-    login: async () => ({ id: '8667ba71b85a4004af54457a9734eed7', name: 'Steve' }),
     logs: async () => 'Aperçu : pas de logs.',
-    cancelLogin: nothing, logout: nothing, play: nothing, openFolder: nothing, repair: nothing,
+    play: nothing, openFolder: nothing, repair: nothing,
     openLink: nothing, installUpdate: nothing, window: nothing,
     ownFiles: async () => [],
     pickFiles: async () => ({ added: [], refused: [] }),

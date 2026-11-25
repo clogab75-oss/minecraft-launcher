@@ -1,13 +1,12 @@
 {
   "general": {
     "name": "Mon Serveur",
-    "subtitle": "Launcher officiel",
+    "subtitle": "Launcher personnalisé",
     "exeName": "MonLauncher"
   },
   "server": {
     "ip": "",
-    "port": 25565,
-    "autoJoin": true
+    "port": 25565
   },
   "minecraft": {
     "version": "26.2",
@@ -15,9 +14,6 @@
     "minRam": 2048,
     "defaultRam": 4096,
     "jvmArgs": ""
-  },
-  "microsoft": {
-    "clientId": ""
   },
   "theme": {
     "bg": "#0e1116",
@@ -40,12 +36,9 @@
   },
   "texts": {
     "welcome": "Prêt à jouer ?",
-    "login": "Se connecter avec Microsoft",
-    "loginHint": "Une page Microsoft s'ouvre dans ton navigateur.",
-    "logout": "Déconnexion",
+    "loginHint": "Ferme Minecraft Launcher s’il est ouvert, puis clique sur Jouer. Le profil Fabric du serveur sera sélectionné ; connecte-toi dans le launcher officiel et clique sur Jouer.",
     "play": "JOUER",
     "preparing": "Préparation…",
-    "running": "En jeu",
     "home": "Accueil",
     "mods": "Mods & packs",
     "settings": "Réglages",
@@ -59,8 +52,7 @@
   "features": {
     "news": true,
     "mods": true,
-    "status": true,
-    "avatar": true
+    "status": true
   },
   "links": [],
   "maintenance": {
@@ -72,5 +64,11 @@
   },
   "modsPolicy": {
     "strict": true
+  },
+  "page": {
+    "description": "Télécharge le launcher, connecte-toi dans Minecraft Launcher puis rejoins le serveur.",
+    "button": "Télécharger pour Windows",
+    "help": "Si Windows affiche un avertissement : « Informations complémentaires », puis « Exécuter quand même ».",
+    "repo": ""
   }
 }
