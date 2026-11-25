@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https: data:">
+<title>Launcher</title>
+<link rel="stylesheet" href="style.css">
+<style id="custom-css"></style>
+</head>
+<body>
+<div id="background"></div>
+<header id="titlebar">
+  <span id="title-name"></span>
+  <span id="title-version"></span>
+  <div class="window-buttons">
+    <button data-window="minimize" title="Réduire">&#8211;</button>
+    <button data-window="maximize" title="Agrandir">&#9633;</button>
+    <button data-window="close" title="Fermer">&#10005;</button>
+  </div>
+</header>
+<div id="banner" hidden><span id="banner-text"></span><button id="banner-button" class="small" hidden>Redémarrer</button></div>
+<div id="app">
+  <nav id="sidebar">
+    <div id="brand"><img id="logo" alt="" hidden><strong id="name"></strong><small id="subtitle"></small></div>
+    <div id="menu">
+      <button class="tab active" data-page="home" data-text="home"></button>
+      <button class="tab" data-page="mods" data-text="mods"></button>
+      <button class="tab" data-page="settings" data-text="settings"></button>
+    </div>
+    <div id="links"></div>
+    <div id="account">
+      <img id="avatar" alt="" hidden>
+      <span id="player"></span>
+      <button id="logout" class="link" data-text="logout" hidden></button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="page active" id="page-home">
+      <div id="hero">
+        <h1 data-text="welcome"></h1>
+        <div id="status" hidden><i></i><span></span></div>
+      </div>
+      <div id="news"><h2 data-text="news"></h2><div id="news-list"></div></div>
+      <div id="actions">
+        <p id="message" role="alert" hidden></p>
+        <div id="progress" hidden><span id="progress-label"></span><div class="bar"><div id="progress-fill"></div></div></div>
+        <div class="row">
+          <button id="login" class="primary" data-text="login"></button>
+          <button id="cancel-login" class="secondary" hidden>Annuler</button>
+          <button id="play" class="primary" hidden></button>
+        </div>
+        <small id="login-hint" data-text="loginHint"></small>
+      </div>
+    </section>
+
+    <section class="page" id="page-mods">
+      <h1 data-text="mods"></h1>
+      <div id="mod-list"></div>
+      <h2 data-text="myFiles"></h2>
+      <div id="drop" class="card">
+        <button class="secondary" id="add-files" data-text="addFiles"></button>
+        <small data-text="dropHint"></small>
+        <p id="own-message" role="status"></p>
+      </div>
+      <div id="own-list"></div>
+    </section>
+
+    <section class="page" id="page-settings">
+      <h1 data-text="settings"></h1>
+      <div class="card">
+        <label for="ram">Mémoire allouée : <b id="ram-value"></b></label>
+        <input type="range" id="ram" step="512">
+      </div>
+      <div class="card">
+        <label class="check"><input type="checkbox" id="fullscreen"> Plein écran</label>
+        <label class="check"><input type="checkbox" id="hideOnPlay"> Cacher le launcher pendant le jeu</label>
+      </div>
+      <div class="card row">
+        <button class="secondary" id="open-folder">Ouvrir le dossier du jeu</button>
+        <button class="secondary" id="repair">Réparer l'installation</button>
+        <button class="secondary" id="show-logs">Voir les logs</button>
+      </div>
+      <p id="settings-message"></p>
+      <pre id="logs" hidden></pre>
+    </section>
+  </main>
+</div>
+<script src="mock.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://*.supabase.co https://api.modrinth.com https://api.github.com; frame-src 'self'">
+<title>Admin du launcher</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<form id="login" hidden>
+  <h1>Admin du launcher</h1>
+  <label>Email<input type="email" id="email" required autocomplete="username"></label>
+  <label>Mot de passe<input type="password" id="password" required autocomplete="current-password"></label>
+  <button class="primary">Se connecter</button>
+  <p id="login-error" class="error" role="alert"></p>
+</form>
+
+<div id="app" hidden>
+  <nav>
+    <strong>⛏ Launcher</strong>
+    <div id="tabs"></div>
+    <button id="logout">Déconnexion</button>
+  </nav>
+  <main>
+    <header>
+      <h1 id="title"></h1>
+      <div id="savebar" hidden><span>Modifications non enregistrées</span><button id="cancel">Annuler</button><button id="save" class="primary">Enregistrer</button></div>
+    </header>
+    <div id="content"></div>
+  </main>
+  <aside id="preview-pane">
+    <p>Aperçu en direct</p>
+    <div id="preview-box"><iframe id="preview" src="preview/index.html" title="Aperçu du launcher"></iframe></div>
+  </aside>
+</div>
+<div id="toast" role="status" hidden></div>
+
+<script src="vendor/supabase.js"></script>
+<script src="config.js"></script>
+<script src="admin.js" type="module"></script>
+</body>
+</html>

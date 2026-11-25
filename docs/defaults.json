@@ -1,0 +1,76 @@
+{
+  "general": {
+    "name": "Mon Serveur",
+    "subtitle": "Launcher officiel",
+    "exeName": "MonLauncher"
+  },
+  "server": {
+    "ip": "",
+    "port": 25565,
+    "autoJoin": true
+  },
+  "minecraft": {
+    "version": "26.2",
+    "loader": "",
+    "minRam": 2048,
+    "defaultRam": 4096,
+    "jvmArgs": ""
+  },
+  "microsoft": {
+    "clientId": ""
+  },
+  "theme": {
+    "bg": "#0e1116",
+    "bgImage": "",
+    "bgOverlay": 0.55,
+    "surface": "#181d26",
+    "surfaceOpacity": 0.85,
+    "text": "#eef1f6",
+    "muted": "#9aa4b5",
+    "accent": "#4ade80",
+    "accentText": "#06210f",
+    "radius": 14,
+    "font": "",
+    "logoUrl": "",
+    "logoSize": 72,
+    "sidebar": "left",
+    "playAlign": "left",
+    "customCss": "",
+    "iconUrl": ""
+  },
+  "texts": {
+    "welcome": "Prêt à jouer ?",
+    "login": "Se connecter avec Microsoft",
+    "loginHint": "Une page Microsoft s'ouvre dans ton navigateur.",
+    "logout": "Déconnexion",
+    "play": "JOUER",
+    "preparing": "Préparation…",
+    "running": "En jeu",
+    "home": "Accueil",
+    "mods": "Mods & packs",
+    "settings": "Réglages",
+    "news": "Actualités",
+    "online": "joueurs en ligne",
+    "offline": "Serveur hors ligne",
+    "myFiles": "Mes ajouts",
+    "addFiles": "Ajouter des fichiers",
+    "dropHint": "Resource packs et shaders (.zip) : choisis-en plusieurs ou glisse-les ici."
+  },
+  "features": {
+    "news": true,
+    "mods": true,
+    "status": true,
+    "avatar": true
+  },
+  "links": [],
+  "maintenance": {
+    "enabled": false,
+    "message": "Le serveur est en maintenance, reviens bientôt !"
+  },
+  "update": {
+    "minVersion": ""
+  },
+  "modsPolicy": {
+    "strict": true
+  }
+}

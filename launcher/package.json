@@ -1,0 +1,58 @@
+{
+  "name": "serveur-launcher",
+  "version": "1.0.0",
+  "description": "Launcher du serveur Minecraft",
+  "author": "Serveur",
+  "private": true,
+  "main": "src/main/main.js",
+  "scripts": {
+    "sync": "node scripts/sync-shared.js",
+    "prestart": "npm run sync",
+    "start": "electron .",
+    "pretest": "npm run sync",
+    "test": "node --test test/*.test.js",
+    "predist": "npm run sync",
+    "dist": "electron-builder --win --publish never"
+  },
+  "dependencies": {
+    "@xmcl/core": "2.15.1",
+    "@xmcl/installer": "6.1.2",
+    "electron-updater": "6.8.11",
+    "yauzl": "^2.10.0"
+  },
+  "devDependencies": {
+    "electron": "45.5.0",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "fr.serveur.launcher",
+    "productName": "MonLauncher",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png",
+      "artifactName": "Launcher-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}
